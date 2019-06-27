@@ -7,10 +7,10 @@ public class LeapYear {
      *  @param  year to be analyzed
      */
     public static boolean isLeapYear(int year){
-	if ((year % 400 == 0)||(year % 4 == 0 && year % 100 !=0 )){
-	    return (true)
+	if ((year % 400 == 0)||(year % 4 == 0 && year % 100 != 0 )){
+	    return true
 	}
-	else return (false)
+	else return false
     }
     private static void checkLeapYear(int year) {
         if (isLeapYear(year)) {
