@@ -8,9 +8,9 @@ public class LeapYear {
      */
     public static boolean isLeapYear(int year){
 	if ((year % 400 == 0)||(year % 4 == 0 && year % 100 !=0 )){
-	    return (True)
+	    return (true)
 	}
-	else return (False)
+	else return (false)
     }
     private static void checkLeapYear(int year) {
         if (isLeapYear(year)) {
