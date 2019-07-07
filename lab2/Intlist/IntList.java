@@ -63,7 +63,7 @@ public class IntList {
     }
 
     /**
-     * Returns a list equal to L with all elements squared. Non-destructive.
+     * Returns a list equal to L with all elements squared. Non-destructive..
      */
     public static IntList squareListRecursive(IntList L) {
         if (L == null) {
