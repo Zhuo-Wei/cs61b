@@ -2,7 +2,7 @@ public class NBody {
 
     private static String starField = "./images/starfield.jpg";
 
-    public static int readSize(String s){
+    private static int readSize(String s){
         In in = new In(s);
         int size = in.readInt();
         return size;
