@@ -111,7 +111,7 @@ public class ArrayDeque<T> {
         items[plus1(nextFirst)] = null;
         nextFirst = plus1(nextFirst);
         size -= 1;
-        if (size / items.length < 0.25 && items.length >= 8) {
+        if ((float) size / items.length < 0.25 && items.length >= 16) {
             resize(items.length / 2);
         }
         return x;
@@ -125,7 +125,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        if ((float) size / items.length < 0.25 && items.length >= 8) {
+        if ((float) size / items.length < 0.25 && items.length >= 16) {
             resize(items.length / 2);
         }
         T x = items[minus1(nextLast)];
@@ -154,6 +154,19 @@ public class ArrayDeque<T> {
         }
 
         return items[n];
+    }
+    public static void main(String[] args) {
+        System.out.println("Running tests.\n");
+        ArrayDeque<Integer> a = new ArrayDeque<Integer>();
+        for (int i = 0; i<20; i++){
+            a.addFirst(i);
+        }
+        a.removeFirst();
+        a.printDeque();
+
+
+
+
     }
 }
 
