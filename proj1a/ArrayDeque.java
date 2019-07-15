@@ -130,7 +130,7 @@ public class ArrayDeque<Item> {
         return removed;
     }
 
-    /* Gets the item at the given index. If no such item exists, returns null. */
+    /* Gets the item at the given ndex. If no such item exists, returns null. */
     public Item get(int index) {
         if (index >= size || index < 0) {
             return null;
