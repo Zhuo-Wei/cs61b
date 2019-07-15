@@ -14,18 +14,6 @@ public class ArrayDeque<T> {
         nextLast = 1;
     }
 
-    /**
-     * create an AList
-     */
-    public ArrayDeque(T x) {
-        items = (T[]) new Object[8];
-        items[0] = x;
-        size = 1;
-        nextFirst = 7;
-        nextLast = 1;
-    }
-
-
     public int size() {
         return size;
     }
@@ -50,7 +38,7 @@ public class ArrayDeque<T> {
     private int plus1(int index) {
         index += 1;
         if (index >= items.length) {
-           index = index - items.length;
+            index = index - items.length;
 
         }
         return index;
@@ -60,16 +48,16 @@ public class ArrayDeque<T> {
         T[] a = (T[]) new Object[newS];
         int head = plus1(nextFirst);
         int tale = minus1(nextLast);
-        if (head > tale) {
-            System.arraycopy(items, head, a, 0, (items.length - head));
-            System.arraycopy(items, 0, a, items.length - head, tale + 1);
-        } else System.arraycopy(items, head, a, 0, size);
+        int nl= 1;
+        for(int i = head; i!= tale; i=plus1(i)){
+            a[nl] = items[i];
+            nl++;
 
+        }
+        a[nl] = items[tale];
+        nextLast = nl+1;
+        nextFirst = 0;
         items = a;
-        nextFirst = a.length - 1;
-        nextLast = size;
-
-
     }
 
     /**
@@ -120,7 +108,7 @@ public class ArrayDeque<T> {
         items[plus1(nextFirst)] = null;
         nextFirst = plus1(nextFirst);
         size -= 1;
-        if (size / items.length < 0.25) {
+        if (size / items.length < 0.25 && items.length >= 8) {
             resize(items.length / 2);
         }
         return x;
@@ -134,7 +122,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        if ((float) size / items.length < 0.25) {
+        if ((float) size / items.length < 0.25 && items.length >= 8) {
             resize(items.length / 2);
         }
         T x = items[minus1(nextLast)];
@@ -152,13 +140,14 @@ public class ArrayDeque<T> {
      * If no such items exists, returns null. Must not alter the deque!
      */
     public T get(int index) {
-        if (size == 0) {
+
+        if (index < 0 || index >= size) {
             return null;
         }
-        //resize(size);
-        if (index >= nextLast || index <= nextFirst) {
-            return null;
+        int n = plus1(nextFirst);
+        for (int i = 0; i < index; i++) {
+            n = plus1(n);
         }
-        return items[index];
+        return items[n];
     }
 }

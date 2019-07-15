@@ -3,11 +3,11 @@ public class LinkedListDeque<T> {
     private int size;
 
     public class Node {
-        public T item;
-        public Node next;
-        public Node prev;
+        private T item;
+        private Node next;
+        private Node prev;
 
-        public Node(T i, Node n, Node p) {
+        private Node(T i, Node n, Node p) {
             item = i;
             next = n;
             prev = p;
@@ -23,17 +23,8 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    /**
-     * create an SSList
-     */
-    public LinkedListDeque(T x){
-        sentinel = new Node(null,null, null);
-        Node p = new Node(x, null, null);
-        sentinel.next = p;
-        sentinel.prev = p;
-        size = 1;
 
-    }
+
     public int size(){
         return size;
     }
@@ -86,6 +77,7 @@ public class LinkedListDeque<T> {
         }
         T x = sentinel.next.item;
         sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
         size -= 1;
         return x;
     }
@@ -100,6 +92,7 @@ public class LinkedListDeque<T> {
         }
         T x = sentinel.prev.item;
         sentinel.prev = sentinel.prev.prev;
+        sentinel.prev.prev.next = sentinel;
         size -=1;
         return x;
 
@@ -138,6 +131,14 @@ public class LinkedListDeque<T> {
 
     }
 
-
+    public static void main(String[] args) {
+        LinkedListDeque<Integer> a = new LinkedListDeque<Integer>();;
+        a.addFirst(0);
+        a.addFirst(1);
+        a.addFirst(2);
+        a.addFirst(3);
+        a.removeLast();
+        a.printDeque();
+    }
 
 }

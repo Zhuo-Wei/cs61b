@@ -1,4 +1,5 @@
 
+
 public class ArrayDequeTest {
 
     /* Utility method for printing out empty checks. */
@@ -71,8 +72,7 @@ public class ArrayDequeTest {
         deque1.addFirst(1);
         int get1 = deque1.get(0);
         int get2 = deque1.get(1);
-        int get3 = deque1.get(7);
-        if(get1 == 5 && get2 == 10 && get3 == 1 && deque1.get(5) == null) {
+        if(get1 == 1 && get2 == 5 && deque1.get(7) == null) {
             printTestStatus(true);
         }
     }
@@ -97,10 +97,10 @@ public class ArrayDequeTest {
     }
 
     public static void main(String[] args) {
-        //addisEmptySizeTest();
+        addisEmptySizeTest();
         //addRemoveTest();
         //getTest();
-        resizeTest();
+        //resizeTest();
 
     }
 }
