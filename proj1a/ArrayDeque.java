@@ -134,7 +134,7 @@ public class ArrayDeque<T> {
     }
 
     /**
-     * Gets the items at the given index,
+     * Gets the items at the given index
      * where 0 is the front, 1 is the next items, and so forth.
      * If no such items exists, returns null. Must not alter the deque!
      */
