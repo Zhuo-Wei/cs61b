@@ -14,7 +14,7 @@ public class LinkedListDeque<T> {
         }
     }
     /**
-    * create an empty Slist
+    * create an empty Sslist
     */
     public LinkedListDeque() {
         sentinel = new Node(null,null, null);
