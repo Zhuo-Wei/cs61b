@@ -44,22 +44,19 @@ public class ArrayDeque<T> {
         return index;
     }
 
-    private void resize(int newS) {
-        T[] a = (T[]) new Object[newS];
-        int head = plus1(nextFirst);
-        int tale = minus1(nextLast);
-        int nl= 1;
-        for(int i = head; i!= tale; i=plus1(i)) {
-            a[nl] = items[i];
-            nl++;
+    private void resize(int capacity) {
+        T[] newArray = (T[]) new Object[capacity];
 
+        int current = plus1(nextFirst);
+        for (int i = 0; i < size; i++) {
+            newArray[i] = items[current];
+            current = plus1(current);
         }
-        a[nl] = items[tale];
-        nextLast = nl+1;
-        nextFirst = 0;
-        items = a;
-    }
 
+        items = newArray;
+        nextFirst = items.length - 1;
+        nextLast = size;
+    }
     /**
      * Adds an items of type T to the front of the deque.
      */
