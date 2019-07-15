@@ -155,18 +155,6 @@ public class ArrayDeque<T> {
 
         return items[n];
     }
-    public static void main(String[] args) {
-        System.out.println("Running tests.\n");
-        ArrayDeque<Integer> a = new ArrayDeque<Integer>();
-        for (int i = 0; i<20; i++){
-            a.addFirst(i);
-        }
-        a.removeFirst();
-        a.printDeque();
 
-
-
-
-    }
 }
 
