@@ -49,7 +49,7 @@ public class ArrayDeque<T> {
         int head = plus1(nextFirst);
         int tale = minus1(nextLast);
         int nl= 1;
-        for(int i = head; i!= tale; i=plus1(i)){
+        for(int i = head; i!= tale; i=plus1(i)) {
             a[nl] = items[i];
             nl++;
 
