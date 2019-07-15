@@ -24,13 +24,16 @@ public class ArrayDeque<T> {
     public boolean isEmpty() {
         if (size == 0) {
             return true;
-        } else return false;
+        }
+
+        return false;
     }
 
     private int minus1(int index) {
         index -= 1;
         if (index < 0) {
-            index = items.length + index;
+            return items.length - 1;
+            // index = items.length + index;
         }
         return index;
     }
@@ -38,7 +41,8 @@ public class ArrayDeque<T> {
     private int plus1(int index) {
         index += 1;
         if (index >= items.length) {
-            index = index - items.length;
+           // index = index - items.length;
+            return 0;
 
         }
         return index;
@@ -47,7 +51,7 @@ public class ArrayDeque<T> {
     private void resize(int newS) {
         T[] a = (T[]) new Object[newS];
         int head = plus1(nextFirst);
-        int tale = minus1(nextLast);
+        //int tale = minus1(nextLast);
         for(int i = 0; i < size; i++){
             a[i] = items[head];
             head = plus1(head);
@@ -143,10 +147,12 @@ public class ArrayDeque<T> {
         if (index < 0 || index >= size) {
             return null;
         }
+
         int n = plus1(nextFirst);
         for (int i = 0; i < index; i++) {
             n = plus1(n);
         }
+
         return items[n];
     }
 }
