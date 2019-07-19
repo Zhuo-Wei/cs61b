@@ -15,7 +15,7 @@ public class Palindrome {
         return isPHelper(i, a);
     }
 
-    public boolean isPHelper(int i, Deque wordDeque) {
+    private boolean isPHelper(int i, Deque wordDeque) {
         if (i <= 1) {
             return true;
         }
@@ -38,7 +38,7 @@ public class Palindrome {
         return isPHelper(i, a, cc);
     }
 
-    public boolean isPHelper(int i, Deque wordDeque, CharacterComparator cc) {
+    private boolean isPHelper(int i, Deque wordDeque, CharacterComparator cc) {
         if (i <= 1) {
             return true;
         }

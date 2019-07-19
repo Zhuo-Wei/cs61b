@@ -39,7 +39,7 @@ Uncomment this class once you've created your Palindrome class. */
     public void testPalindromeByN() {
         OffByN offByN = new OffByN(6);
         assertTrue(palindrome.isPalindrome("gmdjgm", offByN));
-        assertFalse(palindrome.isPalindrome("aaabbbaa", offByN));
+        assertFalse(palindrome.isPalindrome("aabbbaa", offByN));
         assertTrue(palindrome.isPalindrome("", offByN));
         assertTrue(palindrome.isPalindrome("&", offByN));
     }
