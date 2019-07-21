@@ -45,11 +45,13 @@ public class TestArrayDequeGold {
         StudentArrayDeque<Integer> samp = new StudentArrayDeque();
         for (int i = 0; i < 30; i += 1) {
             int Int = StdRandom.uniform(100);
-            ans.addLast(Int);
-            samp.addLast(Int);
+            ans.addFirst(Int);
+            samp.addFirst(Int);
         }
-        Integer exp = ans.removeFirst();
-        Integer act = samp.removeFirst();
+        ans.addLast(1);
+        ans.removeFirst();
+         ans.removeFirst();
+        samp.removeFirst();
        // assertEquals("Oh noooo!\nThis is bad in removeFirst():\n   Removed item " + act
                        // + " not equal to " + exp + "!", exp, act);
         if (ans.size() != samp.size()) {
