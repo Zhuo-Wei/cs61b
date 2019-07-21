@@ -73,14 +73,14 @@ public class TestArrayDequeGold {
         }
         Integer exp = ans.removeLast();
         Integer act = samp.removeLast();
-        assertEquals("Oh noooo!\nThis is bad in removeFirst():\n   Removed item " + act
+        assertEquals("Oh noooo!\nThis is bad in removeLirst():\n   Removed item " + act
                 + " not equal to " + exp + "!", exp, act);
-        assertEquals("Oh noooo!\nThis is bad in removeFirst():\n   Size " + samp.size()
+        assertEquals("Oh noooo!\nThis is bad in removeLirst():\n   Size " + samp.size()
                 + " not equal to " + ans.size() + "!", samp.size(), ans.size());
         for (int i = 0; i < 9; i++) {
             int actual = ans.get(i);
             int expected = samp.get(i);
-            assertEquals("Oh noooo!\nThis is bad in removelast():\n   Random number " + actual
+            assertEquals("Oh noooo!\nThis is bad in removeLast():\n   Random number " + actual
                             + " not equal to " + expected + "!",
                     expected, actual);
         }
