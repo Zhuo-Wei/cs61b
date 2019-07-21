@@ -19,7 +19,6 @@ public class TestGraphBuildingTiny {
      * Initializes the student graphs.
      * You should not need to modify this code. If you do, then the Autograder
      * may not work with your code.
-     *
      * @throws Exception
      */
     @Before
