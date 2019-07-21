@@ -48,8 +48,6 @@ public class TestArrayDequeGold {
             ans.addFirst(Int);
             samp.addFirst(Int);
         }
-        ans.addLast(1);
-        ans.removeFirst();
          ans.removeFirst();
         samp.removeFirst();
        // assertEquals("Oh noooo!\nThis is bad in removeFirst():\n   Removed item " + act
