@@ -27,18 +27,18 @@ public class TestArrayDequeGold {
 
             else if (test == 2) {
                 if (ans.size() != 0) {
-                    ans.removeFirst();
-                    samp.removeFirst();
+                    Integer exp = ans.removeFirst();
+                    Integer act = samp.removeFirst();
                     msg = msg + "removeFirst()\n";
-                    assertEquals(msg, ans.removeFirst(), samp.removeFirst());
+                    assertEquals(msg, exp, act);
                 }
             }
 
             else if (ans.size() != 0) {
-                ans.removeLast();
-                samp.removeLast();
+                Integer exp = ans.removeLast();
+                Integer act = samp.removeLast();
                 msg = msg + "removeLast()\n";
-                assertEquals(msg, ans.removeLast(), samp.removeLast());
+                assertEquals(msg, exp, act);
             }
         }
     }
