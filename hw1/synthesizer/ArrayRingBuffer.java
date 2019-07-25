@@ -24,7 +24,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         //       you'll need to use this.capacity to set the capacity.
         this.fillCount = 0;
         first = 0;
-        last =0 ;
+        last = 0;
         this.capacity = capacity;
         rb = (T[]) new Object[capacity];
     }
@@ -34,12 +34,12 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
      * throw new RuntimeException("Ring buffer overflow"). Exceptions
      * covered Monday.
      */
-    private int plus1 (int x) {
-        if (x == (capacity -1)) {
+    private int plus1(int x) {
+        if (x == (capacity - 1)) {
             return 0;
+        } else {
+            return (x + 1);
         }
-
-        else return (x + 1);
     }
 
     public void enqueue(T x) {
@@ -82,10 +82,10 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     }
 
     // When you get to part 5, implement the needed code to support iteration.
-    private class iterator implements Iterator<T>{
+    private class BufferIterator implements Iterator<T> {
         private int i;
         private int pos;
-        public iterator() {
+        public BufferIterator() {
             i = 0;
         }
 
@@ -93,16 +93,16 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
             return i < fillCount();
         }
 
-        public T next(){
+        public T next() {
             T returnItem = rb[pos];
             pos = plus1(pos);
-            i =+ 1;
+            i += 1;
             return returnItem;
         }
     }
     @Override
     public Iterator<T> iterator() {
-        return new iterator();
+        return new BufferIterator();
     }
 }
 

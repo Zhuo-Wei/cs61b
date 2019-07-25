@@ -1,9 +1,5 @@
-// TODO: Make sure to make this class a part of the synthesizer package
+// Make sure to make this class a part of the synthesizer package
 package synthesizer;
-import synthesizer.AbstractBoundedQueue;
-import synthesizer.ArrayRingBuffer;
-import synthesizer.BoundedQueue;
-
 
 //Make sure this class is public
 public class GuitarString {
