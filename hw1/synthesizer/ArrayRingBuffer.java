@@ -96,7 +96,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         public T next() {
             T returnItem = rb[pos];
             pos = plus1(pos);
-            i += 1;
+            i++;
             return returnItem;
         }
     }
