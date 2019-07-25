@@ -10,7 +10,7 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T>  {
     private T[] rb;
 
     /**
-     * Create a new ArrayRingBuffer with the given capacity
+     * Create a new ArrayRingBuffer with the given capacity.
      */
     public ArrayRingBuffer(int capacity) {
         rb = (T[]) new Object[capacity];
