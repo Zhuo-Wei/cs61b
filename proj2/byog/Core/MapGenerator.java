@@ -10,7 +10,7 @@ public class MapGenerator {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     private static final long SEED = 2873123;
-    private static final RandomUtils RANDOM = new RandomUtils();
+    private static final Random RANDOM = new Random(SEED);
 
     //a nested class: position
     static class Position {
@@ -26,19 +26,19 @@ public class MapGenerator {
 
     //a nested class: room
     static class Room {
-        public static int width;
-        public static int height;
-        public static Position position;
+        public int width;
+        public int height;
+        public Position position;
 
         Room(int w, int h, Position p) {
-            width = w;
-            height = h;
-            position = p;
+            this.width = w;
+            this.height = h;
+            this.position = p;
         }
 
-        public static Position getCenter() {
-            int x = (position.x + 1 + width) / 2;
-            int y = (position.y + 1 + height) / 2;
+        public  Position getCenter() {
+            int x = this.position.x + (-1 + width) / 2;
+            int y = this.position.y + (-1 + height) / 2;
             Position center = new Position(x, y);
             return center;
         }
@@ -88,15 +88,15 @@ public class MapGenerator {
 
     public static ArrayList<Room> drawRooms(TETile[][] world) {
         // get the number of rooms in the world randomly
-        int n = 20 + getRandom(SEED).nextInt(10);
+        int n = 20 + RANDOM.nextInt(10);
         // generate an room arrayList
         ArrayList<Room> rooms = new ArrayList<Room>(n);
         //draw rooms respectively
         for (int i = 0; i < n; i++) {
             // the minimum value of width and length are both 2
-            int w = 3 + getRandom(SEED).nextInt(6);
-            int l = 3 + getRandom(SEED).nextInt(6);
-            Position p = new Position(getRandom(SEED).nextInt(WIDTH - 10), getRandom(SEED).nextInt(HEIGHT - 10));
+            int w = 3 + RANDOM.nextInt(6);
+            int l = 3 + RANDOM.nextInt(6);
+            Position p = new Position(RANDOM.nextInt(WIDTH - 10), RANDOM.nextInt(HEIGHT - 10));
             Room newRoom = new Room(w, l, p);
             rooms.add(newRoom);
             drawRoom(world, newRoom);
@@ -130,6 +130,12 @@ public class MapGenerator {
                 }
                 else if (checkWall(world[start.x][move])) {
                     world[start.x][move] = Tileset.FLOOR;
+                    if(checkNothing(world[start.x - 1][move])) {
+                        world[start.x - 1][move] = Tileset.WALL;
+                    }
+                    if(checkNothing(world[start.x + 1][move])) {
+                        world[start.x + 1][move] = Tileset.WALL;
+                    }
                     move++;
                 }
                 else {
@@ -145,12 +151,18 @@ public class MapGenerator {
             while (move <= Math.max(start.x, end.x)) {
                 if (checkNothing(world[move][start.y])) {
                     world[move][start.y] = Tileset.FLOOR;
-                    world[move][start.x - 1] = Tileset.WALL;
-                    world[move][start.x + 1] = Tileset.WALL;
+                    world[move][start.y - 1] = Tileset.WALL;
+                    world[move][start.y + 1] = Tileset.WALL;
                     move++;
                 }
                 else if (checkWall(world[move][start.y])) {
                     world[move][start.y] = Tileset.FLOOR;
+                    if(checkNothing(world[move][start.y - 1])) {
+                        world[move][start.y - 1] = Tileset.WALL;
+                    }
+                    if(checkNothing(world[move][start.y + 1])) {
+                        world[move][start.y + 1] = Tileset.WALL;
+                    }
                     move++;
                 }
                 else{
@@ -170,86 +182,44 @@ public class MapGenerator {
             drawRoom(world, r);
         }
 
-        public static void connectRooms (TETile[][]world,Room room1, Room room2) {
+        public static void connectRooms (TETile[][]world) {
             ArrayList<Room> rooms = drawRooms(world);
+
             for(int i = 0; i < rooms.size(); i++) {
-                //Room room2 = rooms.get(getRandom(SEED).nextInt(rooms.size()));
-                //Room room1 = rooms.get(i);
+                Room room1 = rooms.get(i);
                 Position start = room1.getCenter();
+                int x = RANDOM.nextInt(rooms.size());
+                while (x == i) {
+                    x = RANDOM.nextInt(rooms.size());
+                }
+                Room room2 = rooms.get(x);
                 Position end = room2.getCenter();
-                if(start.x == end.x) {
+                if(start.y == end.y) {
                     drawHorizontalHallway(world, start, end);
                 }
-                else if(start.y == end.y) {
+                else if(start.x == end.x) {
                     drawVerticalHallway(world, start, end);
                 }
                 else {
-                    int choice = getRandom(SEED).nextInt(2);
+                    int choice = RANDOM.nextInt(2);
                     Position p1 = new Position(start.x, end.y);
-                    Position p2 = new Position(start.y, end.x);
-                    switch(choice) {
-                        case 0: drawCorner(world,p1);
-                                drawVerticalHallway(world, start, p1);
-                                drawHorizontalHallway(world, start, p1);
-                        case 1: drawCorner(world,p2);
-                                drawVerticalHallway(world, start, p2);
-                                drawHorizontalHallway(world, start, p2);
-                    }
+                    Position p2 = new Position(end.x, start.y);
+                    //switch(choice) {
+                        //case 0:{
+                            drawCorner(world,p1);
+                            drawVerticalHallway(world, start, p1);
+                            drawHorizontalHallway(world, end, p1);
+                        //}
+                        /**case 1: {
+                            drawCorner(world, p2);
+                            drawVerticalHallway(world, end, p2);
+                            drawHorizontalHallway(world, start, p2);
+                        }**/
+                    //}
                 }
             }
-        }
-            // check
-            /**
-             if ((p2.x - p1.x > 0) && (p2.y - p1.y > 0)) {
-             if (world[p1.x][p1.y + 1].equals(Tileset.WALL) && world[p1.x + 1][p1.y].equals(Tileset.NOTHING)) {
-             world[p1.x + 1][p1.y - 1] = Tileset.WALL;
-             world[p1.x + 2][p1.y - 1] = Tileset.WALL;
-             world[p1.x + 2][p1.y] = Tileset.WALL;
-             } else if (world[p1.x][p1.y + 1].equals(Tileset.NOTHING) && world[p1.x + 1][p1.y].equals(Tileset.WALL)) {
-             world[p1.x - 1][p1.y + 1] = Tileset.WALL;
-             world[p1.x - 1][p1.y + 2] = Tileset.WALL;
-             world[p1.x][p1.y + 2] = Tileset.WALL;
-             } else {
-             int tileNum = getRandom(SEED).nextInt(2);
-             switch (tileNum) {
-             case 0:
-             world[p1.x + 1][p1.y - 1] = Tileset.WALL;
-             world[p1.x + 2][p1.y - 1] = Tileset.WALL;
-             world[p1.x + 2][p1.y] = Tileset.WALL;
-             ;
-             case 1:
-             world[p1.x - 1][p1.y + 1] = Tileset.WALL;
-             world[p1.x - 1][p1.y + 2] = Tileset.WALL;
-             world[p1.x][p1.y + 2] = Tileset.WALL;
-             }
-             }
-             }
 
-             if ((p2.x - p1.x < 0) && (p2.y - p1.y < 0)) {
-             if (world[p2.x][p2.y + 1].equals(Tileset.WALL) && world[p2.x + 1][p2.y].equals(Tileset.NOTHING)) {
-             world[p2.x + 1][p2.y - 1] = Tileset.WALL;
-             world[p2.x + 2][p2.y - 1] = Tileset.WALL;
-             world[p2.x + 2][p2.y] = Tileset.WALL;
-             } else if (world[p2.x][p2.y + 1].equals(Tileset.NOTHING) && world[p2.x + 1][p2.y].equals(Tileset.WALL)) {
-             world[p2.x - 1][p2.y + 1] = Tileset.WALL;
-             world[p2.x - 1][p2.y + 2] = Tileset.WALL;
-             world[p2.x][p2.y + 2] = Tileset.WALL;
-             } else {
-             int tileNum = getRandom(SEED).nextInt(2);
-             switch (tileNum) {
-             case 0:
-             world[p2.x + 1][p2.y - 1] = Tileset.WALL;
-             world[p2.x + 2][p2.y - 1] = Tileset.WALL;
-             world[p2.x + 2][p2.y] = Tileset.WALL;
-             ;
-             case 1:
-             world[p2.x - 1][p2.y + 1] = Tileset.WALL;
-             world[p2.x - 1][p2.y + 2] = Tileset.WALL;
-             world[p2.x][p2.y + 2] = Tileset.WALL;
-             }
-             }
-             }
-             **/
+        }
 
 
 
