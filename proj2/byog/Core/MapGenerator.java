@@ -9,7 +9,7 @@ import java.util.Random;
 public class MapGenerator {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-    private static long SEED = 2873123;
+    private static long SEED;
     private static Random RANDOM = new Random(SEED);
 
     //a nested class: position

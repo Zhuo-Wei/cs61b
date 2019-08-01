@@ -29,8 +29,8 @@ public class MapVisualTest {
         //MapGenerator.Room test = new MapGenerator.Room(10,10, p);
         //MapGenerator.drawRoom(world, test);
         //MapGenerator.drawRooms(world);
-       // MapGenerator.Position p2 = new MapGenerator.Position(10, 20);
-       // MapGenerator.Position p1 = new MapGenerator.Position(50, 10);
+        // MapGenerator.Position p2 = new MapGenerator.Position(10, 20);
+        // MapGenerator.Position p1 = new MapGenerator.Position(50, 10);
         //MapGenerator.drawVerticalHallway(world,p, p2);
         //MapGenerator.drawHorizontalHallway(world,p, p1);
         //MapGenerator.drawCorner(world,p2);
