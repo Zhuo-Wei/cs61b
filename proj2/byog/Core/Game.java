@@ -50,18 +50,18 @@ public class Game {
             throw new RuntimeException("You must put a string start with 'n' and end with 's'.");
         }
 
-        ter.initialize(WIDTH, HEIGHT);
+        //ter.initialize(WIDTH, HEIGHT);
 
         TETile[][] world = new TETile[WIDTH][HEIGHT];
-        for (int x = 0; x < WIDTH; x += 1) {
-            for (int y = 0; y < HEIGHT; y += 1) {
-                world[x][y] = Tileset.NOTHING;
-            }
-        }
+        //for (int x = 0; x < WIDTH; x += 1) {
+           // for (int y = 0; y < HEIGHT; y += 1) {
+               // world[x][y] = Tileset.NOTHING;
+           // }
+        //}
 
         Random r = new Random(seed);
         MapGenerator.connectRooms(world);
-        ter.renderFrame(world);
+       // ter.renderFrame(world);
 
         return world;
     }
