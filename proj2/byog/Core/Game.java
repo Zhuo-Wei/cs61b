@@ -38,6 +38,7 @@ public class Game {
         TERenderer ter = new TERenderer();
         long seed;
 
+
         if (input.toLowerCase().contains("n") && input.toLowerCase().contains("s")) {
             int start = input.toLowerCase().indexOf("n") + 1;
             int end = input.toLowerCase().indexOf("s");
@@ -49,19 +50,19 @@ public class Game {
         } else {
             throw new RuntimeException("You must put a string start with 'n' and end with 's'.");
         }
-
-        //ter.initialize(WIDTH, HEIGHT);
-
+        /**TERenderer ter = new TERenderer();
+        ter.initialize(WIDTH, HEIGHT);
+        **/
         TETile[][] world = new TETile[WIDTH][HEIGHT];
-        //for (int x = 0; x < WIDTH; x += 1) {
-           // for (int y = 0; y < HEIGHT; y += 1) {
-               // world[x][y] = Tileset.NOTHING;
-           // }
-        //}
+        for (int x = 0; x < WIDTH; x += 1) {
+            for (int y = 0; y < HEIGHT; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
 
         Random r = new Random(seed);
-        MapGenerator.connectRooms(world);
-       // ter.renderFrame(world);
+        MapGenerator.connectRooms(world,r);
+        //ter.renderFrame(world);
 
         return world;
     }

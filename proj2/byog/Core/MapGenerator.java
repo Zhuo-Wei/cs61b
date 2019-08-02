@@ -86,17 +86,17 @@ public class MapGenerator {
 
 
 
-    public static ArrayList<Room> drawRooms(TETile[][] world) {
+    public static ArrayList<Room> drawRooms(TETile[][] world, Random r) {
         // get the number of rooms in the world randomly
-        int n = 15 + RANDOM.nextInt(7);
+        int n = 15 + r.nextInt(7);
         // generate an room arrayList
         ArrayList<Room> rooms = new ArrayList<Room>(n);
         //draw rooms respectively
         for (int i = 0; i < n; i++) {
             // the minimum value of width and length are both 2
-            int w = 4 + RANDOM.nextInt(6);
-            int l = 4 + RANDOM.nextInt(6);
-            Position p = new Position(RANDOM.nextInt(WIDTH - 10), RANDOM.nextInt(HEIGHT - 10));
+            int w = 4 + r.nextInt(6);
+            int l = 4 + r.nextInt(6);
+            Position p = new Position(r.nextInt(WIDTH - 10), r.nextInt(HEIGHT - 10));
             Room newRoom = new Room(w, l, p);
             rooms.add(newRoom);
             drawRoom(world, newRoom);
@@ -182,16 +182,16 @@ public class MapGenerator {
             drawRoom(world, r);
         }
 
-        public static void connectRooms (TETile[][]world) {
-            ArrayList<Room> rooms = drawRooms(world);
+        public static void connectRooms (TETile[][]world, Random r) {
+            ArrayList<Room> rooms = drawRooms(world, r);
             rooms.remove(0);
             for(int i = 0; i < rooms.size(); i++) {
                 Room room1 = rooms.get(i);
                 Position start = room1.getCenter();
-                int x = RANDOM.nextInt(rooms.size());
+                int x = r.nextInt(rooms.size());
                 Room room2 = rooms.get(x);
                 while ((x == i) || Math.abs(room2.position.x - room1.position.x) > WIDTH/2 || Math.abs(room2.position.y - room1.position.y) > HEIGHT/2) {
-                    x = RANDOM.nextInt(rooms.size());
+                    x = r.nextInt(rooms.size());
                     room2 = rooms.get(x);
                 }
                 Position end = room2.getCenter();
@@ -202,7 +202,7 @@ public class MapGenerator {
                     drawVerticalHallway(world, start, end);
                 }
                 else {
-                    int choice = RANDOM.nextInt(2);
+                    int choice = r.nextInt(2);
                     Position p1 = new Position(start.x, end.y);
                     Position p2 = new Position(end.x, start.y);
                     switch(choice) {
