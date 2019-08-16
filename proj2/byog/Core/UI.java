@@ -40,20 +40,20 @@ public class UI {
         return moveStr;
     }
     /**public String solicitNCharsInput(int n) {
-        String input = "";
-        drawFrame(input);
+     String input = "";
+     drawFrame(input);
 
-        while (input.length() < n) {
-            if (!StdDraw.hasNextKeyTyped()) {
-                continue;
-            }
-            char key = StdDraw.nextKeyTyped();
-            input += String.valueOf(key);
-            drawFrame(input);
-        }
-        StdDraw.pause(500);
-        return input;
-    }
+     while (input.length() < n) {
+     if (!StdDraw.hasNextKeyTyped()) {
+     continue;
+     }
+     char key = StdDraw.nextKeyTyped();
+     input += String.valueOf(key);
+     drawFrame(input);
+     }
+     StdDraw.pause(500);
+     return input;
+     }
      **/
     public static char waitCommand() {
         while (!StdDraw.hasNextKeyTyped()) {
@@ -81,7 +81,7 @@ public class UI {
                 seed = (long) Math.random() * 1000;
                 break;
             }
-          if (Character.isDigit(c)) {
+            if (Character.isDigit(c)) {
                 StdDraw.clear(StdDraw.PINK);
                 StdDraw.clear(StdDraw.PINK);
                 StdDraw.text(WIDTH / 2, HEIGHT * 0.6,
@@ -106,10 +106,5 @@ public class UI {
         return seed;
     }
 
-    public static void main(String[] args) {
-        //drawMainMenu();
-       enterSeed();
-
-    }
 
 }

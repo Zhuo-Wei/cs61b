@@ -20,22 +20,20 @@ public class Game {
     public static void playWithKeyboard() {
         UI.drawMainMenu();
         char command = UI.waitCommand();
-            if (command == 'n') {
+        if (command == 'n') {
+            long seed = UI.enterSeed();
+            TERenderer ter = new TERenderer();
+            ter.initialize(WIDTH, HEIGHT);
+            TETile[][] world = setWorld(seed);
+            Random r = new Random(seed);
+            Player p = setPlayer(world,r);
+            ter.renderFrame(world);
+            play(world, p);
+        } else if (command == 'l') {
 
-                long seed = UI.enterSeed();
-                TERenderer ter = new TERenderer();
-                ter.initialize(WIDTH, HEIGHT);
-                TETile[][] world = setWorld(seed);
-                Random r = new Random(seed);
-                Player p = setPlayer(world,r);
-                ter.renderFrame(world);
-                play(world, p);
-
-            } else if (command == 'l') {
-
-            }
-            command = UI.waitCommand();
         }
+        command = UI.waitCommand();
+    }
 
 
     /**
@@ -98,25 +96,27 @@ public class Game {
     }
 
     public static void play(TETile[][] world, Player p) {
-        char command = UI.waitCommand();
-        if (command == 'w') {
-            p.moveUp(world);
-            StdDraw.show();
-        }
+        while (true) {
+            char command = UI.waitCommand();
+            if (command == 'w') {
+                p.moveUp(world);
+                StdDraw.show();
+            }
 
-        if (command == 's') {
-            p.moveDown(world);
-            StdDraw.show();
-        }
+            if (command == 's') {
+                p.moveDown(world);
+                StdDraw.show();
+            }
 
-        if (command == 'a') {
-            p.moveLeft(world);
-            StdDraw.show();
-        }
+            if (command == 'a') {
+                p.moveLeft(world);
+                StdDraw.show();
+            }
 
-        if (command == 'd') {
-            p.moveRight(world);
-            StdDraw.show();
+            if (command == 'd') {
+                p.moveRight(world);
+                StdDraw.show();
+            }
         }
     }
     public static void main(String[] args) {
