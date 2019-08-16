@@ -18,8 +18,8 @@ public class Main {
             TETile[][] worldState = game.playWithInputString("n123s");
             System.out.println(TETile.toString(worldState));
        /** } else {**/
-            Game game = new Game();
-            game.playWithKeyboard();
+            //Game game = new Game();
+            Game.playWithKeyboard();
        // }
     }
 }

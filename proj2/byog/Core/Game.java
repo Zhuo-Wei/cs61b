@@ -21,6 +21,7 @@ public class Game {
         UI.drawMainMenu();
         char command = UI.waitCommand();
             if (command == 'n') {
+
                 long seed = UI.enterSeed();
                 TERenderer ter = new TERenderer();
                 ter.initialize(WIDTH, HEIGHT);
@@ -29,6 +30,7 @@ public class Game {
                 Player p = setPlayer(world,r);
                 ter.renderFrame(world);
                 play(world, p);
+
             } else if (command == 'l') {
 
             }
@@ -96,24 +98,26 @@ public class Game {
     }
 
     public static void play(TETile[][] world, Player p) {
-        while (true) {
-            char command = UI.waitCommand();
+        char command = UI.waitCommand();
         if (command == 'w') {
             p.moveUp(world);
+            StdDraw.show();
         }
 
         if (command == 's') {
             p.moveDown(world);
+            StdDraw.show();
         }
 
         if (command == 'a') {
             p.moveLeft(world);
+            StdDraw.show();
         }
 
         if (command == 'd') {
             p.moveRight(world);
+            StdDraw.show();
         }
-    }
     }
     public static void main(String[] args) {
         playWithKeyboard();
