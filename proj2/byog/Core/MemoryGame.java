@@ -1,4 +1,4 @@
-package byog.lab6;
+package byog.Core;
 
 import edu.princeton.cs.introcs.StdDraw;
 
@@ -6,7 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Random;
 
-public class MemoryGameSolution {
+public class MemoryGame {
     private int width;
     private int height;
     private int round;
@@ -15,23 +15,23 @@ public class MemoryGameSolution {
     private boolean playerTurn;
     private static final char[] CHARACTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
     private static final String[] ENCOURAGEMENT = {"You can do this!", "I believe in you!",
-                                                   "You got this!", "You're a star!", "Go Bears!",
-                                                   "Too easy for you!", "Wow, so impressive!"};
+            "You got this!", "You're a star!", "Go Bears!",
+            "Too easy for you!", "Wow, so impressive!"};
 
     public static void main(String[] args) {
 
         //if (args.length < 1) {
-           // System.out.println("Please enter a seed");
-           // return;
-       // }
+        // System.out.println("Please enter a seed");
+        // return;
+        // }
 
-       // long seed = Long.parseLong(args[0]);
+        // long seed = Long.parseLong(args[0]);
         long seed = Long.parseLong("123");
-        MemoryGameSolution game = new MemoryGameSolution(40, 40, seed);
+        MemoryGame game = new MemoryGame(40, 40, seed);
         game.startGame();
     }
 
-    public MemoryGameSolution(int width, int height, long seed) {
+    public MemoryGame(int width, int height, long seed) {
         this.width = width;
         this.height = height;
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
@@ -133,3 +133,4 @@ public class MemoryGameSolution {
         StdDraw.show();
     }
 }
+

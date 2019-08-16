@@ -10,19 +10,9 @@ public class MapGenerator {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     private static long SEED;
-    private static Random RANDOM = new Random(SEED);
+    private static Random RANDOM;
 
-    //a nested class: position
-    static class Position {
-        int x;
-        int y;
 
-        Position(int posX, int posY) {
-            x = posX;
-            y = posY;
-        }
-
-    }
 
     //a nested class: room
     static class Room {
@@ -220,6 +210,18 @@ public class MapGenerator {
                 }
             }
 
+        }
+        public static void drawDoor(TETile[][]world) {
+            here:
+            for(int j = 1; j < HEIGHT; j++){
+                for(int i = 1; i < WIDTH; i++){
+                    if (checkWall(world[i][j]) && checkWall(world[i - 1][j]) && checkWall(world[i + 1][j]) && checkNothing(world[i][j-1])) {
+                        world[i][j] = Tileset.LOCKED_DOOR;
+                        break here;
+                    }
+
+                }
+            }
         }
 
 

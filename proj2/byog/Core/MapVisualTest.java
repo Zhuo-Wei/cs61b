@@ -37,7 +37,14 @@ public class MapVisualTest {
         //MapGenerator.Room room1 = new MapGenerator.Room(5,5, p1);
         //MapGenerator.drawRoom(world,room1);
         //MapGenerator.Room room2 = new MapGenerator.Room(5,5, p);
+
         MapGenerator.connectRooms(world,r);
+        MapGenerator.drawDoor(world);
+        Player p = Game.setPlayer(world, r);
+        p.moveDown(world);
+        p.moveLeft(world);
+        Game.play(world, p);
         ter.renderFrame(world);
+
     }
 }
