@@ -27,34 +27,7 @@ public class UI {
 
         StdDraw.show();
     }
-    private static String precessString(String input) {
-        String moveStr = input;
-        if ((moveStr.charAt(0) == 'n')) {
-            moveStr = moveStr.substring(1);
-        } else if ((moveStr.charAt(0) == 'l')) {
 
-        } else if ((moveStr.charAt(0) == 'q')) {
-
-        }
-        moveStr = moveStr.replaceAll("\\d", "");
-        return moveStr;
-    }
-    /**public String solicitNCharsInput(int n) {
-     String input = "";
-     drawFrame(input);
-
-     while (input.length() < n) {
-     if (!StdDraw.hasNextKeyTyped()) {
-     continue;
-     }
-     char key = StdDraw.nextKeyTyped();
-     input += String.valueOf(key);
-     drawFrame(input);
-     }
-     StdDraw.pause(500);
-     return input;
-     }
-     **/
     public static char waitCommand() {
         while (!StdDraw.hasNextKeyTyped()) {
             StdDraw.pause(10);
@@ -76,8 +49,8 @@ public class UI {
         StdDraw.show();
         char c = waitCommand();
         long seed = 0;
-        while (c != 's') {
-            if (c == 'r') {
+        while (c != 's' && c != 'S') {
+            if (c == 'r' && c != 'R') {
                 seed = (long) Math.random() * 1000;
                 break;
             }

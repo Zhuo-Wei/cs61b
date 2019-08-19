@@ -11,7 +11,8 @@ public class Game {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-
+    public static TETile[][] world;
+    public static Player player;
 
 
     /**
@@ -24,15 +25,21 @@ public class Game {
             long seed = UI.enterSeed();
             TERenderer ter = new TERenderer();
             ter.initialize(WIDTH, HEIGHT);
-            TETile[][] world = setWorld(seed);
+            world = setWorld(seed);
             Random r = new Random(seed);
-            Player p = setPlayer(world,r);
+            player = setPlayer(world,r);
             ter.renderFrame(world);
-            play(world, p);
+            play(world, player);
         } else if (command == 'l') {
+            TERenderer ter = new TERenderer();
+            ter.initialize(WIDTH, HEIGHT);
+            SaveObject o = SaveLoad.loadWorld();
+            world = o.world;
+            player = o.player;
+            ter.renderFrame(world);
+            play(world, player);
 
         }
-        command = UI.waitCommand();
     }
 
 
@@ -48,14 +55,12 @@ public class Game {
      * @param input the input string to feed to your program
      * @return the 2D TETile[][] representing the state of the world
      */
-    public TETile[][] playWithInputString(String input) {
+    public  TETile[][] playWithInputString(String input) {
         // Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-        TERenderer ter = new TERenderer();
+
         long seed;
-
-
         if (input.toLowerCase().contains("n") && input.toLowerCase().contains("s")) {
             int start = input.toLowerCase().indexOf("n") + 1;
             int end = input.toLowerCase().indexOf("s");
@@ -67,8 +72,11 @@ public class Game {
         } else {
             throw new RuntimeException("You must put a string start with 'n' and end with 's'.");
         }
-
-        TETile[][] world = setWorld(seed);
+        world = setWorld(seed);
+        Random r = new Random(seed);
+        player = setPlayer(world,r);
+        String s = processString(input);
+        stringPlay(world, s, player);
         return world;
     }
     public static TETile[][] setWorld(long seed) {
@@ -96,7 +104,6 @@ public class Game {
     }
 
     public static void play(TETile[][] world, Player p) {
-        while (true) {
             char command = UI.waitCommand();
             if (command == 'w') {
                 p.moveUp(world);
@@ -117,10 +124,57 @@ public class Game {
                 p.moveRight(world);
                 StdDraw.show();
             }
+            if (command == 'q') {
+            SaveLoad.saveGame(new SaveObject(world, p));
+            playWithKeyboard();
         }
     }
-    public static void main(String[] args) {
-        playWithKeyboard();
+    private void stringPlay(TETile[][] world, String s, Player p) {
+        for (int i = 0; i < s.length(); i += 1) {
+            char c = s.charAt(i);
+            if (s.charAt(0) == 'w') {
+                p.noDrawMoveUp(world);
+            }
+            if (s.charAt(0) == 's') {
+                p.noDrawMoveDown(world);
+            }
+            if (s.charAt(0) == 'a') {
+                p.noDrawMoveLeft(world);
+            }
 
+            if (s.charAt(0) == 'd') {
+                p.noDrawMoveRight(world);
+            }
+            if (s.charAt(0) == 'q') {
+                SaveLoad.saveGame(new SaveObject(world, p));
+            }
+        }
     }
+    private static String processString(String input) {
+        String s = input;
+        if ((s.charAt(0) == 'n')) {
+            s = s.substring(1);
+        } else if ((s.charAt(0) == 'l')) {
+            SaveObject w = SaveLoad.loadWorld();
+            world = w.world;
+            player = w.player;
+            s = s.substring(1);
+        } else if ((s.charAt(0) == 'q')) {
+            SaveObject so = new SaveObject(world, player);
+            SaveLoad.saveGame(so);
+        }
+        s = s.replaceAll("\\d", "");
+        return s;
+    }
+    public static long getSeed(String input) {
+        long seed = 0;
+        for (int i = 0; i < input.length(); i += 1) {
+            if (Character.isDigit(input.charAt(i))) {
+                seed = 10 * seed + Long.parseLong("" + input.charAt(i));
+            }
+        }
+        return seed;
+    }
+
+
 }

@@ -3,10 +3,12 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MapGenerator {
+public class MapGenerator implements Serializable {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     private static long SEED;

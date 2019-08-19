@@ -4,8 +4,10 @@ import byog.TileEngine.Tileset;
 import byog.TileEngine.TERenderer;
 import edu.princeton.cs.introcs.StdDraw;
 
+import java.io.Serializable;
 
-public class Player {
+
+public class Player implements Serializable {
     public  Position p;
 
     Player(Position position, TETile world[][]) {
@@ -24,8 +26,6 @@ public class Player {
     }
 
     public void moveUp(TETile world[][]) {
-
-
         Position newP = new Position(p.x,p.y + 1);
         if(p.y + 1 < Game.HEIGHT && movable(world, newP)){
             world[p.x][p.y] = Tileset.FLOOR;
@@ -34,8 +34,17 @@ public class Player {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
-
-            System.out.println("move up");
+            //System.out.println("move up");
+        }
+    }
+    public void noDrawMoveUp(TETile world[][]) {
+        Position newP = new Position(p.x,p.y + 1);
+        if(p.y + 1 < Game.HEIGHT && movable(world, newP)){
+            world[p.x][p.y] = Tileset.FLOOR;
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            //System.out.println("move up");
         }
     }
 
@@ -48,7 +57,17 @@ public class Player {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
-            System.out.println("move down");
+            //System.out.println("move down");
+        }
+    }
+    public void noDrawMoveDown(TETile world[][]) {
+        Position newP = new Position(p.x,p.y - 1);
+        if(p.y > 1 && movable(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            //System.out.println("move down");
         }
     }
 
@@ -65,6 +84,17 @@ public class Player {
         }
     }
 
+    public void noDrawMoveLeft(TETile world[][]) {
+        Position newP = new Position(p.x - 1,p.y);
+        if(p.x > 1 && movable(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            System.out.println("move left");
+        }
+    }
+
     public void moveRight(TETile world[][]) {
         Position newP = new Position(p.x + 1,p.y);
         if(p.x +1 < Game.WIDTH && movable(world, newP)) {
@@ -74,6 +104,16 @@ public class Player {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
+            System.out.println("move right");
+        }
+    }
+    public void noDrawMoveRight(TETile world[][]) {
+        Position newP = new Position(p.x + 1,p.y);
+        if(p.x +1 < Game.WIDTH && movable(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
             System.out.println("move right");
         }
     }
