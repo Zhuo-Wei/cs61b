@@ -59,12 +59,11 @@ public class Game {
         // Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
-        String ss = input;
+
         long seed;
         if (input.toLowerCase().contains("n") && input.toLowerCase().contains("s")) {
             int start = input.toLowerCase().indexOf("n") + 1;
             int end = input.toLowerCase().indexOf("s");
-            ss = input.substring(end + 1);
             try {
                 seed = Long.parseLong(input.substring(start, end));
             } catch(Exception e) {
@@ -74,11 +73,10 @@ public class Game {
             throw new RuntimeException("You must put a string start with 'n' and end with 's'.");
         }
 
-        ss = ss.toLowerCase();
         world = setWorld(seed);
         Random r = new Random(seed);
         player = setPlayer(world,r);
-        String s = processString(ss);
+        String s = processString(input);
         stringPlay(world, s, player);
         return world;
     }
@@ -156,7 +154,8 @@ public class Game {
     private static String processString(String input) {
         String s = input;
         if ((s.charAt(0) == 'n' || s.charAt(0) == 'N')) {
-            s = s.substring(1);
+            int end = input.toLowerCase().indexOf("s");
+            s = s.substring(1 + end);
         } else if ((s.charAt(0) == 'l' || s.charAt(0) == 'L')) {
             SaveObject w = SaveLoad.loadWorld();
             world = w.world;
@@ -171,7 +170,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        System.out.println(processString("N999SDDDWWWDDD"));
+        System.out.println(processString("N999SDDSDWWWDDD"));
     }
 
 }
