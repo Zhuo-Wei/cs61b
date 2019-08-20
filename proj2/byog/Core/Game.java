@@ -60,19 +60,7 @@ public class Game {
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
 
-        long seed;
-        if (input.toLowerCase().contains("n") && input.toLowerCase().contains("s")) {
-            int start = input.toLowerCase().indexOf("n") + 1;
-            int end = input.toLowerCase().indexOf("s");
-            try {
-                seed = Long.parseLong(input.substring(start, end));
-            } catch(Exception e) {
-                throw new RuntimeException("Seed has to be an integer but you input: \"" + input.substring(start, end) + "\"");
-            }
-        } else {
-            throw new RuntimeException("You must put a string start with 'n' and end with 's'.");
-        }
-
+        long seed = getSeed(input);
         world = setWorld(seed);
         Random r = new Random(seed);
         player = setPlayer(world,r);
@@ -102,6 +90,16 @@ public class Game {
         }
         Player p = new Player(pp, world);
         return p;
+    }
+
+    public static long getSeed(String input) {
+        long seed = 0;
+        for (int i = 0; i < input.length(); i += 1) {
+            if (Character.isDigit(input.charAt(i))) {
+                seed = 10 * seed + Long.parseLong("" + input.charAt(i));
+            }
+        }
+        return seed;
     }
 
     public static void play(TETile[][] world, Player p) {
