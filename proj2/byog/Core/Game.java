@@ -103,7 +103,9 @@ public class Game {
     }
 
     public void play(TETile[][] world, Player p) {
+        while (true) {
             char command = UI.waitCommand();
+
             if (command == 'w') {
                 p.moveUp(world);
                 StdDraw.show();
@@ -124,8 +126,9 @@ public class Game {
                 StdDraw.show();
             }
             if (command == 'q') {
-            SaveLoad.saveGame(new SaveObject(world, p));
-            playWithKeyboard();
+                SaveLoad.saveGame(new SaveObject(world, p));
+                playWithKeyboard();
+            }
         }
     }
     private void stringPlay(TETile[][] world, String s, Player p) {
@@ -174,3 +177,4 @@ public class Game {
     }
 
 }
+
