@@ -17,8 +17,8 @@ public class Main {
          TETile[][] worldState = game.playWithInputString(args[0]);
          System.out.println(TETile.toString(worldState));
          } else {
-            Game game = new Game();
-            Game.playWithKeyboard();
+           Game game = new Game();
+        game.playWithKeyboard();
          }
     }
 }

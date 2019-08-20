@@ -11,14 +11,14 @@ public class Game {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-    public static TETile[][] world;
-    public static Player player;
+    private TETile[][] world;
+    private Player player;
 
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
-    public static void playWithKeyboard() {
+    public void playWithKeyboard() {
         UI.drawMainMenu();
         char command = UI.waitCommand();
         if (command == 'n') {
@@ -27,7 +27,7 @@ public class Game {
             ter.initialize(WIDTH, HEIGHT);
             world = setWorld(seed);
             Random r = new Random(seed);
-            player = setPlayer(world,r);
+            player = setPlayer(r);
             ter.renderFrame(world);
             play(world, player);
         } else if (command == 'l') {
@@ -63,13 +63,13 @@ public class Game {
         long seed = getSeed(input);
         world = setWorld(seed);
         Random r = new Random(seed);
-        player = setPlayer(world,r);
+        player = setPlayer(r);
         String s = processString(input);
         stringPlay(world, s, player);
         return world;
     }
-    public static TETile[][] setWorld(long seed) {
-        TETile[][] world = new TETile[WIDTH][HEIGHT];
+    public TETile[][] setWorld(long seed) {
+        world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
                 world[x][y] = Tileset.NOTHING;
@@ -82,9 +82,9 @@ public class Game {
 
         return world;
     }
-    public static Player setPlayer(TETile[][] world, Random r){
+    public Player setPlayer(Random r) {
         Position pp = new Position(0, 0);
-        while(!MapGenerator.checkFloor(world[pp.x][pp.y])) {
+        while (!MapGenerator.checkFloor(world[pp.x][pp.y])) {
             pp.x = r.nextInt(WIDTH);
             pp.y = r.nextInt(HEIGHT);
         }
@@ -92,7 +92,7 @@ public class Game {
         return p;
     }
 
-    public static long getSeed(String input) {
+    public long getSeed(String input) {
         long seed = 0;
         for (int i = 0; i < input.length(); i += 1) {
             if (Character.isDigit(input.charAt(i))) {
@@ -102,7 +102,7 @@ public class Game {
         return seed;
     }
 
-    public static void play(TETile[][] world, Player p) {
+    public void play(TETile[][] world, Player p) {
             char command = UI.waitCommand();
             if (command == 'w') {
                 p.moveUp(world);
@@ -149,7 +149,7 @@ public class Game {
             }
         }
     }
-    private static String processString(String input) {
+    private String processString(String input) {
         String s = input;
         if ((s.charAt(0) == 'n' || s.charAt(0) == 'N')) {
             int end = input.toLowerCase().indexOf("s");
@@ -168,7 +168,9 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        System.out.println(processString("N999SDDSDWWWDDD"));
+        //System.out.println(processString("N999SDDSDWWWDDD"));
+        Game game = new Game();
+        game.playWithKeyboard();
     }
 
 }
