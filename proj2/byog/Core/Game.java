@@ -12,7 +12,7 @@ public class Game {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     private TETile[][] world;
-    private Player player;
+    private  Player player;
 
 
     /**
