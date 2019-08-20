@@ -42,7 +42,8 @@ public class MapVisualTest {
        // MapGenerator.drawDoor(world);
         //Player p = Game.setPlayer(world, r);
         Game game = new Game();
-        world = game.playWithInputString("N999SDDDWWWDDD");
+        world = game.playWithInputString("N999S");
+        world = game.playWithInputString("Lass");
         ter.renderFrame(world);
 
     }

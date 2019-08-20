@@ -34,7 +34,7 @@ public class Player implements Serializable {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
-            //System.out.println("move up");
+            System.out.println("move up");
         }
     }
     public void noDrawMoveUp(TETile world[][]) {
@@ -44,7 +44,7 @@ public class Player implements Serializable {
             p = newP;
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
-            //System.out.println("move up");
+            System.out.println("move nd up");
         }
     }
 
@@ -57,7 +57,7 @@ public class Player implements Serializable {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
-            //System.out.println("move down");
+            System.out.println("move down");
         }
     }
     public void noDrawMoveDown(TETile world[][]) {
@@ -67,7 +67,7 @@ public class Player implements Serializable {
             p = newP;
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
-            //System.out.println("move down");
+            System.out.println("move nd down");
         }
     }
 
@@ -91,7 +91,7 @@ public class Player implements Serializable {
             p = newP;
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
-            System.out.println("move left");
+            System.out.println("move nd left");
         }
     }
 
@@ -114,7 +114,7 @@ public class Player implements Serializable {
             p = newP;
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
-            System.out.println("move right");
+            System.out.println("move nd right");
         }
     }
 }

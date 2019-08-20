@@ -12,7 +12,7 @@ public class Game {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
     private TETile[][] world;
-    private  Player player;
+    private Player player;
 
 
     /**
@@ -131,20 +131,20 @@ public class Game {
     private void stringPlay(TETile[][] world, String s, Player p) {
         for (int i = 0; i < s.length(); i += 1) {
             char c = s.charAt(i);
-            if (s.charAt(0) == 'w') {
+            if (c == 'w') {
                 p.noDrawMoveUp(world);
             }
-            if (s.charAt(0) == 's') {
+            if (c == 's') {
                 p.noDrawMoveDown(world);
             }
-            if (s.charAt(0) == 'a') {
+            if (c == 'a') {
                 p.noDrawMoveLeft(world);
             }
 
-            if (s.charAt(0) == 'd') {
+            if (c == 'd') {
                 p.noDrawMoveRight(world);
             }
-            if (s.charAt(0) == 'q'|| s.charAt(0) == 'Q') {
+            if (c == 'q'|| c == 'Q') {
                 SaveLoad.saveGame(new SaveObject(world, p));
             }
         }
