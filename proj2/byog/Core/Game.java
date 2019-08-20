@@ -144,7 +144,7 @@ public class Game {
             if (s.charAt(0) == 'd') {
                 p.noDrawMoveRight(world);
             }
-            if (s.charAt(0) == 'q') {
+            if (s.charAt(0) == 'q'|| s.charAt(0) == 'Q') {
                 SaveLoad.saveGame(new SaveObject(world, p));
             }
         }
