@@ -76,22 +76,42 @@ public class MapGenerator implements Serializable {
         }
     }
 
-
+    public static boolean isOverlap (ArrayList<Room> rooms, Room r) {
+        for(int i = 0; i< rooms.size() - 1; i++){
+           int xDistance = Math.abs(rooms.get(i).position.x - r.position.x);
+           int yDistance = Math.abs(rooms.get(i).position.y - r.position.y);
+           if (xDistance < 1 + rooms.get(i).width + r.width && yDistance < rooms.get(i).height + r.height + 1) {
+                return true;
+           }
+        }
+        return false;
+    }
 
     public static ArrayList<Room> drawRooms(TETile[][] world, Random r) {
         // get the number of rooms in the world randomly
-        int n = 15 + r.nextInt(7);
+        int n = 12 + r.nextInt(7);
         // generate an room arrayList
         ArrayList<Room> rooms = new ArrayList<Room>(n);
         //draw rooms respectively
-        for (int i = 0; i < n; i++) {
+        int i = 0;
+        while(i < n) {
             // the minimum value of width and length are both 2
             int w = 4 + r.nextInt(6);
             int l = 4 + r.nextInt(6);
-            Position p = new Position(r.nextInt(WIDTH - 10), r.nextInt(HEIGHT - 10));
+            Position p = new Position(r.nextInt(WIDTH - w), r.nextInt(HEIGHT - l));
             Room newRoom = new Room(w, l, p);
-            rooms.add(newRoom);
-            drawRoom(world, newRoom);
+            if(!isOverlap(rooms, newRoom)) {
+                System.out.println("n:" + n + "i:" + i );
+                rooms.add(newRoom);
+                drawRoom(world, newRoom);
+                i++;
+            }
+            else if (i > 0.7 * n) {
+                rooms.add(newRoom);
+                drawRoom(world, newRoom);
+                i++;
+                System.out.println("hhhn:" + n + "i:" + i + " ");
+            }
         }
         return rooms;
     }

@@ -24,11 +24,11 @@ public class MapVisualTest {
                 world[x][y] = Tileset.NOTHING;
             }
         }
-       // Random r = new Random(SEED);
+        Random r = new Random(SEED);
         //MapGenerator.Position p = new MapGenerator.Position(20, 20);
         //MapGenerator.Room test = new MapGenerator.Room(10,10, p);
         //MapGenerator.drawRoom(world, test);
-        //MapGenerator.drawRooms(world);
+        //MapGenerator.drawRooms(world,r);
         // MapGenerator.Position p2 = new MapGenerator.Position(10, 20);
         // MapGenerator.Position p1 = new MapGenerator.Position(50, 10);
         //MapGenerator.drawVerticalHallway(world,p, p2);
@@ -43,7 +43,7 @@ public class MapVisualTest {
         //Player p = Game.setPlayer(world, r);
         Game game = new Game();
         world = game.playWithInputString("N999S");
-        world = game.playWithInputString("Lass");
+        //world = game.playWithInputString("Lass");
         ter.renderFrame(world);
 
     }

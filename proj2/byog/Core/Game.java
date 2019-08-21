@@ -13,6 +13,7 @@ public class Game {
     public static final int HEIGHT = 30;
     private TETile[][] world;
     private Player player;
+    private Key key;
 
 
     /**
@@ -28,16 +29,18 @@ public class Game {
             world = setWorld(seed);
             Random r = new Random(seed);
             player = setPlayer(r);
+            key = setKey(r);
             ter.renderFrame(world);
-            play(world, player);
+            play();
         } else if (command == 'l') {
             TERenderer ter = new TERenderer();
             ter.initialize(WIDTH, HEIGHT);
             SaveObject o = SaveLoad.loadWorld();
             world = o.world;
             player = o.player;
+            key = o.key;
             ter.renderFrame(world);
-            play(world, player);
+            play();
 
         }
     }
@@ -64,8 +67,9 @@ public class Game {
         world = setWorld(seed);
         Random r = new Random(seed);
         player = setPlayer(r);
+        key = setKey(r);
         String s = processString(input);
-        stringPlay(world, s, player);
+        stringPlay(s);
         return world;
     }
     public TETile[][] setWorld(long seed) {
@@ -91,6 +95,15 @@ public class Game {
         Player p = new Player(pp, world);
         return p;
     }
+    public Key setKey(Random r) {
+        Position pp = new Position(0, 0);
+        while (!MapGenerator.checkFloor(world[pp.x][pp.y])) {
+            pp.x = r.nextInt(WIDTH);
+            pp.y = r.nextInt(HEIGHT);
+        }
+        Key k = new Key(pp, world);
+        return k;
+    }
 
     public long getSeed(String input) {
         long seed = 0;
@@ -102,53 +115,53 @@ public class Game {
         return seed;
     }
 
-    public void play(TETile[][] world, Player p) {
+    public void play() {
         while (true) {
             char command = UI.waitCommand();
 
             if (command == 'w') {
-                p.moveUp(world);
+                player.moveUp(world);
                 StdDraw.show();
             }
 
             if (command == 's') {
-                p.moveDown(world);
+                player.moveDown(world);
                 StdDraw.show();
             }
 
             if (command == 'a') {
-                p.moveLeft(world);
+                player.moveLeft(world);
                 StdDraw.show();
             }
 
             if (command == 'd') {
-                p.moveRight(world);
+                player.moveRight(world);
                 StdDraw.show();
             }
             if (command == 'q') {
-                SaveLoad.saveGame(new SaveObject(world, p));
+                SaveLoad.saveGame(new SaveObject(world, player, key));
                 playWithKeyboard();
             }
         }
     }
-    private void stringPlay(TETile[][] world, String s, Player p) {
+    private void stringPlay(String s) {
         for (int i = 0; i < s.length(); i += 1) {
             char c = s.charAt(i);
             if (c == 'w') {
-                p.noDrawMoveUp(world);
+                player.noDrawMoveUp(world);
             }
             if (c == 's') {
-                p.noDrawMoveDown(world);
+                player.noDrawMoveDown(world);
             }
             if (c == 'a') {
-                p.noDrawMoveLeft(world);
+                player.noDrawMoveLeft(world);
             }
 
             if (c == 'd') {
-                p.noDrawMoveRight(world);
+                player.noDrawMoveRight(world);
             }
             if (c == 'q'|| c == 'Q') {
-                SaveLoad.saveGame(new SaveObject(world, p));
+                SaveLoad.saveGame(new SaveObject(world, player, key));
             }
         }
     }
@@ -161,9 +174,10 @@ public class Game {
             SaveObject w = SaveLoad.loadWorld();
             world = w.world;
             player = w.player;
+            key = w.key;
             s = s.substring(1);
         } else if ((s.charAt(0) == 'q' || s.charAt(0) == 'Q')) {
-            SaveObject so = new SaveObject(world, player);
+            SaveObject so = new SaveObject(world, player, key);
             SaveLoad.saveGame(so);
         }
         s = s.replaceAll("\\d", "");
