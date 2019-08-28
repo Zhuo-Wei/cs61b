@@ -5,8 +5,8 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
     private double[] fractions;
-    private int Times;
-    Percolation[] percolation;
+    private int times;
+    private Percolation[] percolation;
 
     // perform T independent experiments on an N-by-N grid
     public PercolationStats(int N, int T, PercolationFactory pf) {
@@ -17,7 +17,7 @@ public class PercolationStats {
         fractions = new double[T];
         int totalNum = N * N;
         for (int i = 0; i < T; i += 1) {
-            percolation[i] = pf.make(N);
+            this.percolation[i] = pf.make(N);
             while (!percolation[i].percolates()) {
                 int row = StdRandom.uniform(N);
                 int col = StdRandom.uniform(N);
@@ -42,13 +42,13 @@ public class PercolationStats {
     public double confidenceLow() {
         double u = mean();
         double sigma = stddev();
-        return u - (1.96 * sigma / Math.sqrt(Times));
+        return u - (1.96 * sigma / Math.sqrt(times));
     }
 
     // high endpoint of 95% confidence interval
     public double confidenceHigh() {
         double mu = mean();
         double sigma = stddev();
-        return mu + (1.96 * sigma / Math.sqrt(Times));
+        return mu + (1.96 * sigma / Math.sqrt(times));
     }
 }
