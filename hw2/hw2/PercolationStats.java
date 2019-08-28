@@ -6,7 +6,6 @@ import edu.princeton.cs.algs4.StdStats;
 public class PercolationStats {
     private double[] fractions;
     private int times;
-    private Percolation[] percolation;
 
     // perform T independent experiments on an N-by-N grid
     public PercolationStats(int N, int T, PercolationFactory pf) {
@@ -17,14 +16,14 @@ public class PercolationStats {
         fractions = new double[T];
         int totalNum = N * N;
         for (int i = 0; i < T; i += 1) {
-            this.percolation[i] = pf.make(N);
-            while (!percolation[i].percolates()) {
+            Percolation percolation = pf.make(N);
+            while (!percolation.percolates()) {
                 int row = StdRandom.uniform(N);
                 int col = StdRandom.uniform(N);
-                percolation[i].open(row, col);
+                percolation.open(row, col);
 
             }
-            fractions[i] = (double) percolation[i].numberOfOpenSites() / totalNum;
+            fractions[i] = (double) percolation.numberOfOpenSites() / totalNum;
         }
     }
 
