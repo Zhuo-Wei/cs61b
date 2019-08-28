@@ -13,7 +13,7 @@ public class PercolationStats {
         if (N <= 0 || T <= 0) {
             throw new IllegalArgumentException();
         }
-        Times = T;
+        times = T;
         fractions = new double[T];
         int totalNum = N * N;
         for (int i = 0; i < T; i += 1) {
