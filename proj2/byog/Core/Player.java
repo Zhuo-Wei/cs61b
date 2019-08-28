@@ -8,18 +8,27 @@ import java.io.Serializable;
 
 
 public class Player implements Serializable {
-    public  Position p;
-
+    public Position p;
+    public boolean gotKey;
     Player(Position position, TETile world[][]) {
         this.p = position;
         world[p.x][p.y] = Tileset.PLAYER;
+        gotKey = false;
     }
+
     public void setTile(TETile world[][]){
         world[p.x][p.y] = Tileset.PLAYER;
     }
 
     public  boolean movable(TETile world[][], Position p) {
         if(world[p.x][p.y].equals(Tileset.FLOOR)){
+            return true;
+        }
+        return false;
+    }
+
+    public  boolean isKey(TETile world[][], Position p) {
+        if(world[p.x][p.y].equals(Tileset.KEY)){
             return true;
         }
         return false;
@@ -35,6 +44,14 @@ public class Player implements Serializable {
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
             System.out.println("move up");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
     public void noDrawMoveUp(TETile world[][]) {
@@ -45,6 +62,14 @@ public class Player implements Serializable {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             System.out.println("move nd up");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
 
@@ -58,6 +83,14 @@ public class Player implements Serializable {
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
             System.out.println("move down");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
     public void noDrawMoveDown(TETile world[][]) {
@@ -68,6 +101,14 @@ public class Player implements Serializable {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             System.out.println("move nd down");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
 
@@ -81,6 +122,14 @@ public class Player implements Serializable {
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
             System.out.println("move left");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
 
@@ -92,6 +141,14 @@ public class Player implements Serializable {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             System.out.println("move nd left");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
 
@@ -105,6 +162,14 @@ public class Player implements Serializable {
             world[newP.x][newP.y] = Tileset.PLAYER;
             world[newP.x][newP.y].draw(newP.x, newP.y);
             System.out.println("move right");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
     public void noDrawMoveRight(TETile world[][]) {
@@ -115,6 +180,14 @@ public class Player implements Serializable {
             setTile(world);
             world[newP.x][newP.y] = Tileset.PLAYER;
             System.out.println("move nd right");
+        }else if(isKey(world, newP)) {
+            world[p.x][p.y] = Tileset.FLOOR;
+            world[p.x][p.y].draw(p.x, p.y);
+            p = newP;
+            setTile(world);
+            world[newP.x][newP.y] = Tileset.PLAYER;
+            world[newP.x][newP.y].draw(newP.x, newP.y);
+            gotKey = true;
         }
     }
 }

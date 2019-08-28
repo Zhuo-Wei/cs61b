@@ -2,6 +2,9 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 import byog.TileEngine.Tileset;
 import edu.princeton.cs.introcs.StdDraw;
@@ -20,10 +23,10 @@ public class Game {
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
-        UI.drawMainMenu();
-        char command = UI.waitCommand();
+        drawMainMenu();
+        char command = waitCommand();
         if (command == 'n') {
-            long seed = UI.enterSeed();
+            long seed = enterSeed();
             TERenderer ter = new TERenderer();
             ter.initialize(WIDTH, HEIGHT);
             world = setWorld(seed);
@@ -81,7 +84,8 @@ public class Game {
         }
 
         Random r = new Random(seed);
-        MapGenerator.connectRooms(world, r);
+        ArrayList<MapGenerator.Room> rooms  = MapGenerator.drawRooms(world, r);
+        MapGenerator.connectRooms(world, r, rooms);
         MapGenerator.drawDoor(world);
 
         return world;
@@ -117,7 +121,7 @@ public class Game {
 
     public void play() {
         while (true) {
-            char command = UI.waitCommand();
+            char command = waitCommand2();
 
             if (command == 'w') {
                 player.moveUp(world);
@@ -183,6 +187,108 @@ public class Game {
         s = s.replaceAll("\\d", "");
         return s;
     }
+
+    //UI:
+    public static void drawMainMenu() {
+
+        StdDraw.setCanvasSize(WIDTH * 16, HEIGHT * 16);
+        StdDraw.setXscale(0, WIDTH);
+        StdDraw.setYscale(0, HEIGHT);
+        StdDraw.setFont(new Font("Times New Roman", Font.BOLD, 60));
+        StdDraw.setPenColor(Color.WHITE);
+
+        StdDraw.enableDoubleBuffering();
+        StdDraw.clear(StdDraw.PINK);
+        StdDraw.text(WIDTH / 2, HEIGHT * 0.7, "CS61B: The Game");
+        StdDraw.show();
+
+        StdDraw.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        StdDraw.text(WIDTH / 2, HEIGHT * 0.4, "New Game (N)");
+        StdDraw.text(WIDTH / 2, HEIGHT * 0.35, "Load Game (L)");
+        StdDraw.text(WIDTH / 2, HEIGHT * 0.3, "Quit (Q)");
+
+        StdDraw.show();
+    }
+
+    public char waitCommand() {
+        while (!StdDraw.hasNextKeyTyped()) {
+            StdDraw.pause(10);
+            continue;
+        }
+        return StdDraw.nextKeyTyped();
+    }
+    public char waitCommand2() {
+        while (!StdDraw.hasNextKeyTyped()) {
+            StdDraw.pause(10);
+            mouseTile();
+            continue;
+        }
+        return StdDraw.nextKeyTyped();
+    }
+    public  long enterSeed() {
+        StdDraw.setCanvasSize(WIDTH * 16, HEIGHT * 16);
+        StdDraw.setXscale(0, WIDTH);
+        StdDraw.setYscale(0, HEIGHT);
+        StdDraw.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        StdDraw.setPenColor(Color.WHITE);
+
+
+        StdDraw.clear(StdDraw.PINK);
+        StdDraw.text(WIDTH / 2, HEIGHT * 0.6,
+                "Please enter a seed, or press 'r' for a random seed. Press s to confirm: ");
+        StdDraw.show();
+        char c = waitCommand();
+        long seed = 0;
+        while (c != 's' && c != 'S') {
+            if (c == 'r' && c != 'R') {
+                seed = (long) Math.random() * 1000;
+                break;
+            }
+            if (Character.isDigit(c)) {
+                StdDraw.clear(StdDraw.PINK);
+                StdDraw.clear(StdDraw.PINK);
+                StdDraw.text(WIDTH / 2, HEIGHT * 0.6,
+                        "Please enter a seed, or press 'r' for a random seed. Press s to confirm: ");
+                StdDraw.show();
+                seed = 10 * seed + Long.parseLong("" + c);
+                StdDraw.clear(StdDraw.PINK);
+                StdDraw.text(WIDTH / 2, HEIGHT * 0.5, "Seed: " + seed);
+                StdDraw.show();
+            } else {
+                StdDraw.clear(StdDraw.PINK);
+                StdDraw.text(WIDTH / 2, HEIGHT * 0.6,
+                        "Please enter a seed, or press 'r' for a random seed. Press s to confirm: ");
+
+                StdDraw.show();
+                StdDraw.text(WIDTH / 2, HEIGHT * 0.5, "Seed: " + seed);
+                StdDraw.text( WIDTH / 2, HEIGHT * 0.4, "numbers only pls");
+                StdDraw.show();
+            }
+            c = waitCommand();
+        }
+        return seed;
+    }
+    public void mouseTile() {
+        double x = StdDraw.mouseX();
+        double y = StdDraw.mouseY();
+        int w = (int) Math.floorDiv((long) x, 1);
+        int h = (int) Math.floorDiv((long) y, 1);
+        TETile tile = world[w][h];
+        StdDraw.setPenColor(Color.BLACK);
+        StdDraw.filledRectangle(WIDTH / 2, HEIGHT - 1, WIDTH / 2, 1);
+        StdDraw.setPenColor(Color.PINK);
+        StdDraw.textLeft(1, HEIGHT - 1, tile.description());
+        if(player.gotKey == true){
+            StdDraw.textRight(WIDTH - 1, HEIGHT - 1,
+                    "Got it!! Let's get out of the maze!" );
+        }
+        else {
+            StdDraw.textRight(WIDTH - 1, HEIGHT - 1,
+                    "Find the key to get out of the maze!");
+        }
+        StdDraw.show(10);
+    }
+
 
     public static void main(String[] args) {
         //System.out.println(processString("N999SDDSDWWWDDD"));

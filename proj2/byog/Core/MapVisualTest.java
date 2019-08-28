@@ -38,11 +38,11 @@ public class MapVisualTest {
         //MapGenerator.drawRoom(world,room1);
         //MapGenerator.Room room2 = new MapGenerator.Room(5,5, p);
 
-        //MapGenerator.connectRooms(world,r);
+        MapGenerator.connectRooms(world,r,MapGenerator.drawRooms(world,r));
        // MapGenerator.drawDoor(world);
         //Player p = Game.setPlayer(world, r);
-        Game game = new Game();
-        world = game.playWithInputString("N999S");
+        //Game game = new Game();
+        //world = game.playWithInputString("N999S");
         //world = game.playWithInputString("Lass");
         ter.renderFrame(world);
 

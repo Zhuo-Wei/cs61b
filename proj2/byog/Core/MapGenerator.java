@@ -11,9 +11,7 @@ import java.util.Random;
 public class MapGenerator implements Serializable {
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-    private static long SEED;
-    private static Random RANDOM;
-
+    public static boolean doorIsOpened;
 
 
     //a nested class: room
@@ -21,6 +19,8 @@ public class MapGenerator implements Serializable {
         public int width;
         public int height;
         public Position position;
+        public int id;
+
 
         Room(int w, int h, Position p) {
             this.width = w;
@@ -35,15 +35,6 @@ public class MapGenerator implements Serializable {
             return center;
         }
     }
-
-    /**
-     * Gets a Random according to the seed that player sets.
-     */
-    private static Random getRandom() {
-        Random RANDOM = new Random(SEED);
-        return RANDOM;
-    }
-
 
     public static void drawRoom(TETile[][] world, Room r) {
         // flooring
@@ -98,7 +89,7 @@ public class MapGenerator implements Serializable {
             // the minimum value of width and length are both 2
             int w = 4 + r.nextInt(6);
             int l = 4 + r.nextInt(6);
-            Position p = new Position(r.nextInt(WIDTH - w), r.nextInt(HEIGHT - l));
+            Position p = new Position(r.nextInt(WIDTH - w - 3) + 2, r.nextInt(HEIGHT - l - 3) + 2);
             Room newRoom = new Room(w, l, p);
             if(!isOverlap(rooms, newRoom)) {
                 System.out.println("n:" + n + "i:" + i );
@@ -194,18 +185,65 @@ public class MapGenerator implements Serializable {
             drawRoom(world, r);
         }
 
-        public static void connectRooms (TETile[][]world, Random r) {
-            ArrayList<Room> rooms = drawRooms(world, r);
-            rooms.remove(0);
+        public static void connect (TETile[][]world, Random r, Room room1, Room room2){
+            Position start = room1.getCenter();
+            Position end = room2.getCenter();
+            if(start.y == end.y) {
+                drawHorizontalHallway(world, start, end);
+            }
+            else if(start.x == end.x) {
+                drawVerticalHallway(world, start, end);
+            }
+            else {
+                int choice = r.nextInt(2);
+                Position p1 = new Position(start.x, end.y);
+                Position p2 = new Position(end.x, start.y);
+                switch(choice) {
+                    case 0:{
+                        drawCorner(world,p1);
+                        drawVerticalHallway(world, start, p1);
+                        drawHorizontalHallway(world, end, p1);
+                    }
+                    case 1: {
+                        drawCorner(world, p2);
+                        drawVerticalHallway(world, end, p2);
+                        drawHorizontalHallway(world, start, p2);
+                    }
+                }
+            }
+        }
+        public static void connectRooms (TETile[][]world, Random r, ArrayList<Room> rooms ) {
+           // ArrayList<Room> rooms = drawRooms(world, r);
+            //rooms.remove(0);
+            for (int i = 0; i < rooms.size(); i++){
+                rooms.get(i).id = i;
+            }
             for(int i = 0; i < rooms.size(); i++) {
                 Room room1 = rooms.get(i);
                 Position start = room1.getCenter();
-                int x = r.nextInt(rooms.size());
-                Room room2 = rooms.get(x);
-                while ((x == i) || Math.abs(room2.position.x - room1.position.x) > WIDTH/2 || Math.abs(room2.position.y - room1.position.y) > HEIGHT/2) {
-                    x = r.nextInt(rooms.size());
-                    room2 = rooms.get(x);
+                //int x = r.nextInt(rooms.size());
+               //find the nearest room of rooms[i]
+                int x = 0;
+                int minDis = WIDTH ^2 + HEIGHT^2;
+                for (int j = i + 1; j< rooms.size(); j++){
+                    while(rooms.get(j).id != rooms.get(0).id) {
+                        Room tempRoom = rooms.get(j);
+                        double dis = Math.pow(tempRoom.position.x - room1.position.x, 2) + Math.pow(tempRoom.position.y - room1.position.y, 2);
+                        if (i != j && dis < minDis) {
+                            minDis = (int) dis;
+                            x = j;
+                        }
+                    }
                 }
+                Room room2 = rooms.get(x);
+                if(room1.id != room2.id){
+                connect(world, r ,room1, room2);
+                room2.id = room1.id;
+                }
+                //while ((x == i) || Math.abs(room2.position.x - room1.position.x) > WIDTH/2 || Math.abs(room2.position.y - room1.position.y) > HEIGHT/2) {
+                   // x = r.nextInt(rooms.size());
+                    //room2 = rooms.get(x);
+               // }
                 Position end = room2.getCenter();
                 if(start.y == end.y) {
                     drawHorizontalHallway(world, start, end);
@@ -230,6 +268,8 @@ public class MapGenerator implements Serializable {
                         }
                     }
                 }
+                room1.isConnected = true;
+                room2.isConnected = true;
             }
 
         }
