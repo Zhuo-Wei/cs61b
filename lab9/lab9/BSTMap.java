@@ -72,9 +72,11 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
       * Or if p is null, it returns a one node BSTMap containing (KEY, VALUE).
      */
     private Node putHelper(K key, V value, Node p) {
-        if (p == null) return new Node(key, value);
+       if (p == null) {
+           p = new Node(key, value);
+       }
         int cmp = key.compareTo(p.key);
-        if (cmp < 0) {
+        if  (cmp < 0) {
             p.left  = putHelper(key, value, p.left);
         }
         else if (cmp > 0) {
@@ -82,7 +84,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
         else {
             p.value = value;
-            size++;
+            size += 1;
         }
 
         return p;
@@ -98,7 +100,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             remove(key);
             return;
         }
-        root = putHelper(key, value, root);
+        this.root = putHelper(key, value, this.root);
 
     }
 
