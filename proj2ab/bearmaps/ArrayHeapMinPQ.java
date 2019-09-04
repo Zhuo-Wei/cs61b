@@ -147,7 +147,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
 
         System.out.println(minHeap.getSmallest());
         minHeap.changePriority(2, 2);
-        //minHeap.changePriority(6, 0);
+        //minHeap.changePriority(6, 0);....
         System.out.println(minHeap.getSmallest());
 
     }
