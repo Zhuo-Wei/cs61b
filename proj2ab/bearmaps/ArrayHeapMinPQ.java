@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
-    private ArrayList<HeapSeal> itemPQ;
+    private ArrayList<Node> itemPQ;
     private HashMap<T, Integer> itemIndexMap;
 
     public ArrayHeapMinPQ() {
@@ -13,10 +13,10 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
         itemIndexMap = new HashMap<>();
     }
 
-    private class HeapSeal<T>{
+    private class Node<T>{
         public T item;
         public double priority;
-        public HeapSeal (T i, double p) {
+        public Node(T i, double p) {
             this.item = i;
             this.priority= p;
         }
@@ -80,7 +80,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
     }
 
     private void swap(int i, int j) {
-        HeapSeal swap = itemPQ.get(i);
+        Node swap = itemPQ.get(i);
         itemPQ.set(i, itemPQ.get(j));
         itemPQ.set(j, swap);
         itemIndexMap.put((T)itemPQ.get(i).getItem(), i);
@@ -92,7 +92,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
         if (contains(item)) {
             throw new IllegalArgumentException();
         }
-        itemPQ.add(new HeapSeal(item, priority));
+        itemPQ.add(new Node(item, priority));
         itemIndexMap.put(item, size() - 1);
         swim(size() - 1);
 

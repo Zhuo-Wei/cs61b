@@ -15,6 +15,9 @@ public class ArrayHeapMinPQTest {
         minHeap.add(5, 2);
         minHeap.add(6, 3);
         assertTrue(minHeap.size() == 6);
+        minHeap.removeSmallest();
+        minHeap.removeSmallest();
+        assertTrue(minHeap.size() == 4);
         //assertEquals(minHeap.contains(6), true);
     }
 
@@ -28,6 +31,7 @@ public class ArrayHeapMinPQTest {
         minHeap.add(5, 2);
         minHeap.add(6, 3);
         assertEquals(minHeap.contains(1), true);
+        assertEquals(minHeap.contains(8), false);
         assertEquals(minHeap.contains(2), true);
         assertEquals(minHeap.contains(3), true);
         assertEquals(minHeap.contains(4), true);
@@ -44,6 +48,9 @@ public class ArrayHeapMinPQTest {
         minHeap.add(5, 0);
         minHeap.add(6, 3);
         assertTrue(minHeap.getSmallest() == 5);
+        minHeap.removeSmallest();
+        assertTrue(minHeap.getSmallest() == 1);
+
     }
 
     @Test
