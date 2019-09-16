@@ -138,7 +138,7 @@ public class KDTree implements PointSet {
         Point p7 = new Point(4, 4);
 
         KDTree nn = new KDTree(Arrays.asList(p1, p2, p3, p4, p5, p6, p7));
-        System.out.println(nn.root.point);
+        System.out.println(nn.root.getOrientation());
         //Returns the closest point to the inputted coordinates. This should take O(logN) time on average,
         // where N is the number of points.
     }
