@@ -33,6 +33,9 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
         }
     }
     private int parent(int k) {
+        if (k == 0) {
+            return 0;
+        }
         return (k - 1) / 2;
     }
 
@@ -52,7 +55,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
     }
     //from bottom to top
     private void swim(int k) {
-        if(greater(parent(k),k)) {
+        if(greater(parent(k),k) && k > 0) {
             swap(k, parent(k));
             swim(parent(k));
         }
@@ -64,8 +67,8 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
         if (leftChild(parent) < size() && greater(parent, leftChild(parent))) {
             parent = leftChild(parent);
         }
-        if (rightChild(parent) < size() && greater(parent, rightChild(parent))) {
-            parent = rightChild(parent);
+        if (rightChild(k) < size() && greater(parent, rightChild(k))) {
+            parent = rightChild(k);
         }
         if (parent != k){
             swap(parent, k);
@@ -83,7 +86,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
         Node swap = itemPQ.get(i);
         itemPQ.set(i, itemPQ.get(j));
         itemPQ.set(j, swap);
-        itemIndexMap.put((T)itemPQ.get(i).getItem(), i);
+        itemIndexMap.put((T) itemPQ.get(i).getItem(), i);
         itemIndexMap.put((T)itemPQ.get(j).getItem(), j);
     }
 
@@ -113,11 +116,14 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
 
     @Override
     public T removeSmallest() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
         T smallest = (T)itemPQ.get(0).getItem();
         swap(0, size() - 1);
         itemPQ.remove(size() - 1);
-        sink(0);
         itemIndexMap.remove(smallest);
+        sink(0);
         return smallest;
     }
 
@@ -128,7 +134,7 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
 
     @Override
     public void changePriority(T item, double priority) {
-        if(!contains(item)) {
+        if(!contains(item)|| isEmpty()) {
             throw new NoSuchElementException();
         }
         int index = itemIndexMap.get(item);
@@ -140,15 +146,15 @@ public class ArrayHeapMinPQ<T> implements ExtrinsicMinPQ<T>{
             swim(index);
         }
     }
-    public static void main(String[] args) {
-        ArrayHeapMinPQ<Integer> minHeap = new ArrayHeapMinPQ<>();
-        minHeap.add(1, 1);
-        minHeap.add(2, 0);
-
-        System.out.println(minHeap.getSmallest());
-        minHeap.changePriority(2, 2);
-        //minHeap.changePriority(6, 0);....
-        System.out.println(minHeap.getSmallest());
-
-    }
+//    public static void main(String[] args) {
+//        ArrayHeapMinPQ<Integer> minHeap = new ArrayHeapMinPQ<>();
+//        minHeap.add(1, 1);
+//        minHeap.add(2, 0);
+//
+//        System.out.println(minHeap.getSmallest());
+//        minHeap.changePriority(2, 2);
+//        //minHeap.changePriority(6, 0);....
+//        System.out.println(minHeap.getSmallest());
+//
+//    }
 }
